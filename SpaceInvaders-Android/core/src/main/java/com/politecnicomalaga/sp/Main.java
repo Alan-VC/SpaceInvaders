@@ -1,9 +1,11 @@
 package com.politecnicomalaga.sp;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.politecnicomalaga.sp.control.Controlador;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +14,10 @@ import java.util.Map;
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
+    private Gdx gdx;
     Map<String,Texture> galeriaImagenes;
+    Controlador controlador;
+
     @Override
     public void create() {
         batch = new SpriteBatch();
