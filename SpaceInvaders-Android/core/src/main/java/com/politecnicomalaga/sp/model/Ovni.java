@@ -25,6 +25,7 @@ public class Ovni {
 
     //getters y setters
 
+
     public float getX() {
         return x;
     }
@@ -72,6 +73,31 @@ public class Ovni {
     public void setMitadHeight(float mitadHeight) {
         this.mitadHeight = mitadHeight;
     }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public Direccion getDir() {
+        return dir;
+    }
+
+    public void setDir(Direccion dir) {
+        this.dir = dir;
+    }
+
+    public String getTextura() {
+        return textura;
+    }
+
+    public void setTextura(String textura) {
+        this.textura = textura;
+    }
+
     public float getXEsquina (){ return x-mitadWidth; }
     public float  getYEsquina(){ return y-mitadHeight; }
 
