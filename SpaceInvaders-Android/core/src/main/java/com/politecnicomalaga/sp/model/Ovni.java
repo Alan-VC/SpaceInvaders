@@ -4,15 +4,24 @@ public class Ovni {
     private float x,y;
     private float width,height;
     private float mitadWidth,mitadHeight;
+    public enum Estado {VIVO, MUERTO};
+    private Estado estado;
+    public enum Direccion {ARRIBA, ABAJO, DERECHA, IZQUIERDA, NOMOVER}
+    private Direccion dir;
+    private String textura;
 
-    public Ovni(float x, float y, float width, float height) {
+    //constructor
+
+    public Ovni(float x, float y, float width, float height, Estado estado, Direccion dir, String textura) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        mitadWidth=width/2;
-        mitadHeight=height/2;
+        this.estado = estado;
+        this.dir = dir;
+        this.textura = textura;
     }
+
 
     //getters y setters
 
@@ -82,5 +91,25 @@ public class Ovni {
     private boolean colisionH(float y1,float mitadH1,float y2,float mitadH2){
         if (Math.abs(y1-y2)<=mitadH1+mitadH2) return true;
         return false;
+    }
+
+    private void mover(Direccion direccion, float velocidad){
+        switch (direccion){
+            case ABAJO:
+                this.setY(this.y-velocidad);
+                break;
+
+            case ARRIBA:
+                this.setY(this.y+velocidad);
+                break;
+
+            case DERECHA:
+                this.setX(this.x+velocidad);
+                break;
+
+            case IZQUIERDA:
+                this.setX(this.x-velocidad);
+                break;
+        }
     }
 }
