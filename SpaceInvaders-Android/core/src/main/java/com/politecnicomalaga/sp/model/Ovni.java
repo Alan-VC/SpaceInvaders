@@ -2,10 +2,19 @@ package com.politecnicomalaga.sp.model;
 
 public class Ovni {
     private float x,y;
-    private int width,height;
+    private float width,height;
+    private float mitadWidth,mitadHeight;
+
+    public Ovni(float x, float y, float width, float height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        mitadWidth=width/2;
+        mitadHeight=height/2;
+    }
 
     //getters y setters
-
 
     public float getX() {
         return x;
@@ -23,38 +32,55 @@ public class Ovni {
         this.y = y;
     }
 
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(float width) {
         this.width = width;
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(float height) {
         this.height = height;
     }
 
+    public float getMitadWidth() {
+        return mitadWidth;
+    }
+
+    public void setMitadWidth(float mitadWidth) {
+        this.mitadWidth = mitadWidth;
+    }
+
+    public float getMitadHeight() {
+        return mitadHeight;
+    }
+
+    public void setMitadHeight(float mitadHeight) {
+        this.mitadHeight = mitadHeight;
+    }
+    public float getXEsquina (){ return x-mitadWidth; }
+    public float  getYEsquina(){ return y-mitadHeight; }
+
+    //Otros métodos
     public boolean colision (Ovni otraNave){
-        if (colisionW(this.x,this.width,otraNave.getX(),otraNave.getWidth()) && colisionH(this.y,this.height,otraNave.getY(),otraNave.getHeight())){
+        if (colisionW(this.x,this.mitadWidth,otraNave.getX(),otraNave.getMitadWidth()) && colisionH(this.y,this.mitadHeight,otraNave.getY(),otraNave.getMitadHeight())){
             return true;
         }
         return false;
     }
 
-    private boolean colisionW(float x1,int w1, float x2,int w2){
-        if (x1 >x2+w2) return false;
-        if (x1+w1<x2) return false;
-        return true;
+    private boolean colisionW(float x1,float mitadW1, float x2,float mitadW2){
+       if (Math.abs(x1-x2)<=mitadW1+mitadW2) return true;
+       return false;
     }
 
-    private boolean colisionH(float y1,int h1,float y2,int h2){
-        if (y1<y2-h2) return false;
-        if (y1-h1>y2) return false;
-        return true;
+    private boolean colisionH(float y1,float mitadH1,float y2,float mitadH2){
+        if (Math.abs(y1-y2)<=mitadH1+mitadH2) return true;
+        return false;
     }
 }

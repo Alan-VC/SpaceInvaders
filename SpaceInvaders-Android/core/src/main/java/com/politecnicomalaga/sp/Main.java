@@ -15,6 +15,8 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
     private Gdx gdx;
+
+    private float y,x;
     Map<String,Texture> galeriaImagenes;
     Controlador controlador;
 
@@ -23,27 +25,12 @@ public class Main extends ApplicationAdapter {
         batch = new SpriteBatch();
         galeriaImagenes = new HashMap<>();
 
-
-
         image = new Texture("enemigo1.png");
         galeriaImagenes.put("enemigo1.png",image);
         image = new Texture("enemigo2.png");
         galeriaImagenes.put("enemigo2.png",image);
-        image = new Texture("enemigo3.png");
-        galeriaImagenes.put("enemigo3.png",image);
-        image = new Texture("enemigo4.png");
-        galeriaImagenes.put("enemigo4.png",image);
-        image = new Texture("heroe.png");
-        galeriaImagenes.put("heroe.png",image);
-        image = new Texture("disparoA.png");
-        galeriaImagenes.put("disparoA.png",image);
-        image = new Texture("disparoE.png");
-        galeriaImagenes.put("disparoE.png",image);
-
-
-
-
-
+        image = new Texture("naveJugador.png");
+        galeriaImagenes.put("naveJugador.png",image);
 
     }
 
@@ -51,16 +38,20 @@ public class Main extends ApplicationAdapter {
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
 
-
-
         //Control de entrada
         if(gdx.input.justTouched()){
-                Controlador.getInstance().click();
+            x= Gdx.input.getX();
+            y=Gdx.input.getY();
+            Controlador.getInstance().click(x,y);
         }
+
         //Control de estado
         Controlador.getInstance().simulaMundo();
+
+
         //Pintar el mundo
         batch.begin();
+        batch.draw(galeriaImagenes.get("naveJugador.png"),0,0,200, 160);
         Controlador.getInstance().pintar(batch, galeriaImagenes);
         batch.end();
     }
