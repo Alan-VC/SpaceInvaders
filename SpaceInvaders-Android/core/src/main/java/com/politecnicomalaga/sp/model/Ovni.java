@@ -119,7 +119,7 @@ public class Ovni {
         return false;
     }
 
-    private void mover(Direccion direccion, float velocidad){
+    public void mover(Direccion direccion, float velocidad){
         switch (direccion){
             case ABAJO:
                 this.setY(this.y-velocidad);
