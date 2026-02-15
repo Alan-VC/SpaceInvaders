@@ -9,12 +9,14 @@ public class DisparoEne extends Disparo{
     }
     @Override
     public boolean desaparecer() {
-        if (this.getY()<0) return true;
+        if (this.getY()<=0) {
+            this.setEstado(Estado.MUERTO);
+            return true;
+        }
         return false;
     }
 
     public boolean morir(NaveAmi naveAmi) {
-
         if (naveAmi.estaVivo() && this.colision(naveAmi)) {
             naveAmi.recibirDisparo();
             this.setEstado(Estado.MUERTO);
