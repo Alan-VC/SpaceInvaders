@@ -18,8 +18,10 @@ public class Ovni {
         this.width = width;
         this.height = height;
         this.estado = estado;
-        this.dir = dir;
         this.textura = textura;
+        mitadHeight=this.height/2;
+        mitadWidth=this.width/2;
+        this.dir=dir;
     }
 
 
