@@ -29,7 +29,10 @@ public class Controlador {
     public void click (float x, float y){
         cambiarSentidoNaveAmiga(x);
     }
-    public void simulaMundo(){
+    public void simulaMundo(float anchoPantalla, float altoPantalla){
+        if (naveAmiga.getX()>=anchoPantalla-naveAmiga.getWidth() || naveAmiga.getX()<=0){
+             naveAmiga.setDir(Ovni.Direccion.NOMOVER);
+        }
         naveAmiga.mover(naveAmiga.getDir(),velocidadNave);
     }
 
