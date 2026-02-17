@@ -1,5 +1,8 @@
 package com.politecnicomalaga.sp.model;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 public class Ovni {
     private float x,y;
     private float width,height;
@@ -139,6 +142,10 @@ public class Ovni {
                 this.setX(this.x-velocidad);
                 break;
         }
+    }
+
+    public void pintar(SpriteBatch batch, Texture textura){
+        batch.draw(textura, x, y, width, height);
     }
 
 }
