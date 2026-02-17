@@ -16,6 +16,8 @@ public class Main extends ApplicationAdapter {
     private Texture image;
     private Gdx gdx;
 
+    private float anchoPantalla,altoPantalla;
+
     private float y,x;
     Map<String,Texture> galeriaImagenes;
     Controlador controlador;
@@ -32,6 +34,9 @@ public class Main extends ApplicationAdapter {
         image = new Texture("naveJugador.png");
         galeriaImagenes.put("naveJugador.png",image);
 
+        anchoPantalla = Gdx.graphics.getWidth();
+        altoPantalla=Gdx.graphics.getHeight();
+
     }
 
     @Override
@@ -46,12 +51,11 @@ public class Main extends ApplicationAdapter {
         }
 
         //Control de estado
-        Controlador.getInstance().simulaMundo();
+        Controlador.getInstance().simulaMundo(anchoPantalla,altoPantalla);
 
 
         //Pintar el mundo
         batch.begin();
-        batch.draw(galeriaImagenes.get("naveJugador.png"),0,0,200, 160);
         Controlador.getInstance().pintar(batch, galeriaImagenes);
         batch.end();
     }
