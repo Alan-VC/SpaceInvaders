@@ -1,58 +1,59 @@
 package com.politecnicomalaga.sp.model;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class NaveEne extends Nave{
 
-    private int probailidadDisparo;
-    private Random r;
+    private int probabilidadDisparo; //Entre 0 y 100
+    private ArrayList<DisparoEne> misDisparos; //lista de disparos
 
-    public NaveEne(float x, float y, float width, float height, Estado estado, Direccion dir, String textura, int vidas, float cadencia, int probailidadDisparo, Random r) {
+    public NaveEne(float x, float y, float width, float height, Estado estado, Direccion dir, String textura, int vidas, float cadencia, int probabilidadDisparo) {
         super(x, y, width, height, estado, dir, textura, vidas, cadencia);
-        this.probailidadDisparo = probailidadDisparo;
-        this.r = r;
+        this.probabilidadDisparo = probabilidadDisparo;
+        this.misDisparos = new ArrayList<>();
     }
 
-    public int getProbailidadDisparo() {
-        return probailidadDisparo;
+    public int getProbabilidadDisparo() {
+        return probabilidadDisparo;
+    }
+    public void setProbabilidadDisparo(int probabilidadDisparo) {
+        this.probabilidadDisparo = probabilidadDisparo;
     }
 
-    public void setProbailidadDisparo(int probailidadDisparo) {
-        this.probailidadDisparo = probailidadDisparo;
+    public ArrayList<DisparoEne> getMisDisparos() {
+        return misDisparos;
     }
 
-    public Random getR() {
-        return r;
+    public void setMisDisparos(ArrayList<DisparoEne> misDisparos) {
+        this.misDisparos = misDisparos;
     }
 
-    public void setR(Random r) {
-        this.r = r;
-    }
-
-    //Create
+    //Crear los disparos(Create)
     @Override
     public void disparar() {
-        if (estaVivo()) { //comprobación basica si esta vivo antes de realizar calculos
+        if (estaVivo()) {
+            if (Math.random() * 100 < getProbabilidadDisparo()) {
+                float posX = getX();
+                float posY = getY() - getMitadHeight();
 
-            //Se realiza un random de 1000 cada frame (60 veces por segundo)
-            //Si el resultado es menor a la cadencia disparamos
-            //Por ejemplo una cadencia de 5 es un 0,5% probabilidad de disparo en cada frame, x 60 un 30% cada segundo
-            //Eso es aproximadamente un disparo cada 3 segundos.
-            //La cadencia minima es 1, 6% probabilidad por segundo, aproximadamente cada 16 segundos
-
-            if (r.nextInt(1000) < (int)getCadencia()){
-                float x = getX() + getMitadWidth(); //De la propia nave su X mas la mitad para que se genere en el centro
-                float y = getY();
-                DisparoEne disparoEne = new DisparoEne(x,y);
-
-                disparoEne.setX(disparoEne.getX() - disparoEne.getMitadWidth()); //para centrar con respecto a la nave
+                // Creamos el disparo y lo añadimos a la lista
+                DisparoEne nuevoDisparo = new DisparoEne(posX, posY, 5f, 15f, Estado.VIVO, Direccion.ABAJO, "disparoEne.png"); // He puesto valores de ejemplo luego se cambia
+                misDisparos.add(nuevoDisparo);
             }
         }
     }
+    //Gestionar la salida de la pantalla de los disparos (Delete)
+    public void gestionarMisDisparos() {
+        for (int i = misDisparos.size() - 1 ; i >= 0; i--){//Recorremos el array al reves para no liarla con los indices
+            DisparoEne d = misDisparos.get(i);
 
-    //Mover
-
-    //Comprobar colision
-
-    //Eliminarse si no esta en pantalla
+            //Si el disparo esta vivo es decir no ha colisionado lo movemos
+            if (d.getEstado() == Estado.VIVO){
+                d.mover(Direccion.ABAJO, 5f);
+                d.desaparecer(); //Preguntamos si se ha salido de la pantalla y este setea el estado a muerto
+            }
+            if (d.getEstado() == Estado.MUERTO) misDisparos.remove(i); //Lo eliminamos si la comprobación de desaparecer de la pantalla ya nos da que esta Muerto
+        }
+    }
 }
