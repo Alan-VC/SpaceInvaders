@@ -16,7 +16,7 @@ public class DisparoEne extends Disparo{
         return false;
     }
 
-    public boolean morir(NaveAmi naveAmi) {
+    public boolean comprobarColision(NaveAmi naveAmi) {
         if (naveAmi.estaVivo() && this.colision(naveAmi)) {
             naveAmi.recibirDisparo();
             this.setEstado(Estado.MUERTO);
