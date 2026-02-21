@@ -37,7 +37,10 @@ public class Controlador {
     }
 
     public void pintar(SpriteBatch batch, Map<String, Texture> galeriaImagenes){
+        naveAmiga.pintar(batch,galeriaImagenes.get(naveAmiga.getTextura()));
 
+        //en un futuro se implementa el pintar de batallón cuando esté programado.
+        //batallon.pintar(batch);
     }
 
     public void cambiarSentidoNaveAmiga (float x){
