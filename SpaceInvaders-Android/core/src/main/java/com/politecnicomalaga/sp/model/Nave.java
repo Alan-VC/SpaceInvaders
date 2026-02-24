@@ -34,9 +34,14 @@ public abstract class Nave extends Ovni{
 
     //Metodos
     //Si recibimos un disparo perdemos una vida, si llega a 0 morimos seteamos a muerto.
-    public void recibirDisparo(){
-        this.vidas--;
-        if (this.vidas<=0) this.setEstado(Estado.MUERTO);
+    public void recibirDisparo() {
+        if (estaVivo()) { // NUEVO: Solo procesamos el daño si no está muerto
+            this.vidas--;
+            if (this.vidas <= 0) {
+                this.vidas = 0; // NUEVO: Evitamos vidas negativas que puedan romper algo en el controlador
+                this.setEstado(Estado.MUERTO);
+            }
+        }
     }
 
     //Para verificar si esta vivo mas como para usarlo en el controlador
@@ -46,5 +51,4 @@ public abstract class Nave extends Ovni{
 
     //Una nave puede disparar, es abstracto, cada nave dispara de su manera pero debe implementarlo
     public abstract void disparar();
-
 }
