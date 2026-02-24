@@ -6,11 +6,15 @@ public class NaveEne extends Nave{
 
     private int probabilidadDisparo; //Entre 0 y 100 la seteamos en el controlador
     private ArrayList<DisparoEne> misDisparos; //Lista de disparos
+    private float anchoBala;
+    private float altoBala;
 
-    public NaveEne(float x, float y, float width, float height, Estado estado, Direccion dir, String textura, int vidas, float cadencia, int probabilidadDisparo) {
+    public NaveEne(float x, float y, float width, float height, Estado estado, Direccion dir, String textura, int vidas, float cadencia, int probabilidadDisparo, float anchoBala, float altoBala) {
         super(x, y, width, height, estado, dir, textura, vidas, cadencia);
         this.probabilidadDisparo = probabilidadDisparo;
         this.misDisparos = new ArrayList<>();
+        this.anchoBala = anchoBala;
+        this.altoBala = altoBala;
     }
 
     public int getProbabilidadDisparo() {
@@ -33,11 +37,12 @@ public class NaveEne extends Nave{
     public void disparar() {
         if (estaVivo()) {
             if (Math.random() * 100 < getProbabilidadDisparo()) {
-                float posX = getX();
-                float posY = getY() - getMitadHeight();
+                // Cálculo dinámico para centrar la bala perfectamente
+                float posX = (getX() + getMitadWidth()) - (this.anchoBala / 2f);
+                float posY = getY() - this.altoBala;
 
                 // Creamos el disparo y lo añadimos a la lista
-                DisparoEne nuevoDisparo = new DisparoEne(posX, posY, 5f, 15f, Estado.VIVO, Direccion.ABAJO, "disparoEne.png"); // Valores de ejemplo, al empezar a trabajar se modifican
+                DisparoEne nuevoDisparo = new DisparoEne(posX, posY, this.anchoBala, this.altoBala, Estado.VIVO, Direccion.ABAJO, "disparoEne.png");
                 misDisparos.add(nuevoDisparo);
             }
         }
