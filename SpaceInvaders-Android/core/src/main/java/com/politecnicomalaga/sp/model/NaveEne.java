@@ -1,12 +1,11 @@
 package com.politecnicomalaga.sp.model;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class NaveEne extends Nave{
 
-    private int probabilidadDisparo; //Entre 0 y 100
-    private ArrayList<DisparoEne> misDisparos; //lista de disparos
+    private int probabilidadDisparo; //Entre 0 y 100 la seteamos en el controlador
+    private ArrayList<DisparoEne> misDisparos; //Lista de disparos
 
     public NaveEne(float x, float y, float width, float height, Estado estado, Direccion dir, String textura, int vidas, float cadencia, int probabilidadDisparo) {
         super(x, y, width, height, estado, dir, textura, vidas, cadencia);
@@ -38,7 +37,7 @@ public class NaveEne extends Nave{
                 float posY = getY() - getMitadHeight();
 
                 // Creamos el disparo y lo añadimos a la lista
-                DisparoEne nuevoDisparo = new DisparoEne(posX, posY, 5f, 15f, Estado.VIVO, Direccion.ABAJO, "disparoEne.png"); // He puesto valores de ejemplo luego se cambia
+                DisparoEne nuevoDisparo = new DisparoEne(posX, posY, 5f, 15f, Estado.VIVO, Direccion.ABAJO, "disparoEne.png"); // Valores de ejemplo, al empezar a trabajar se modifican
                 misDisparos.add(nuevoDisparo);
             }
         }
