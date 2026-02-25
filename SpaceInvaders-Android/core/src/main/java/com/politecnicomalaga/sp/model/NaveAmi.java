@@ -35,14 +35,14 @@ public class NaveAmi extends Nave {
     }
 
     //Gestionar la salida de la pantalla de los disparos (Delete)
-    public void gestionarMisDisparos() {
+    public void gestionarMisDisparos(float limiteSuperior) {
         for (int i = misDisparos.size() - 1 ; i >= 0; i--){//Recorremos el array al reves para no liarla con los indices
             DisparoAmi d = misDisparos.get(i);
 
             //Si el disparo esta vivo es decir no ha colisionado lo movemos
             if (d.getEstado() == Estado.VIVO){
                 d.mover(Direccion.ARRIBA, getVelocidadBala());
-                d.desaparecer(); //Preguntamos si se ha salido de la pantalla y este setea el estado a muerto
+                d.desaparecer(limiteSuperior); //Preguntamos si se ha salido de la pantalla y este setea el estado a muerto
             }
             if (d.getEstado() == Estado.MUERTO) misDisparos.remove(i); //Lo eliminamos si la comprobación de desaparecer de la pantalla ya nos da que esta Muerto
         }
