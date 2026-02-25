@@ -6,15 +6,20 @@ public abstract class Nave extends Ovni{
     private int vidas;
     private float cadencia;
 
-    //Constructor
-    public Nave(float x, float y, float width, float height, Estado estado, Direccion dir, String textura, int vidas, float cadencia) {
+    // Atributos compartidos para el disparo
+    private float anchoBala;
+    private float altoBala;
+    private float velocidadBala;
+
+    public Nave(float x, float y, float width, float height, Estado estado, Direccion dir, String textura, int vidas, float cadencia, float anchoBala, float altoBala, float velocidadBala) {
         super(x, y, width, height, estado, dir, textura);
         this.vidas = vidas;
         this.cadencia = cadencia;
+        this.anchoBala = anchoBala;
+        this.altoBala = altoBala;
+        this.velocidadBala = velocidadBala;
     }
 
-
-    //Getters
     public int getVidas() {
         return vidas;
     }
@@ -23,13 +28,36 @@ public abstract class Nave extends Ovni{
         this.vidas = vidas;
     }
 
-    //Setters
     public float getCadencia() {
         return cadencia;
     }
 
     public void setCadencia(float cadencia) {
         this.cadencia = cadencia;
+    }
+
+    public float getAnchoBala() {
+        return anchoBala;
+    }
+
+    public void setAnchoBala(float anchoBala) {
+        this.anchoBala = anchoBala;
+    }
+
+    public float getAltoBala() {
+        return altoBala;
+    }
+
+    public void setAltoBala(float altoBala) {
+        this.altoBala = altoBala;
+    }
+
+    public float getVelocidadBala() {
+        return velocidadBala;
+    }
+
+    public void setVelocidadBala(float velocidadBala) {
+        this.velocidadBala = velocidadBala;
     }
 
     //Metodos
@@ -49,6 +77,7 @@ public abstract class Nave extends Ovni{
         return this.getEstado() == Estado.VIVO;
     }
 
-    //Una nave puede disparar, es abstracto, cada nave dispara de su manera pero debe implementarlo
+    //Ambas naves disparan y gestionan sus disparos pero lo hacen de manera diferente, metodo abstracto
     public abstract void disparar();
+    public abstract void gestionarMisDisparos();
 }
