@@ -35,6 +35,7 @@ public class NaveAmi extends Nave {
     }
 
     //Gestionar la salida de la pantalla de los disparos (Delete)
+    @Override
     public void gestionarMisDisparos(float limiteSuperior) {
         for (int i = misDisparos.size() - 1 ; i >= 0; i--){//Recorremos el array al reves para no liarla con los indices
             DisparoAmi d = misDisparos.get(i);

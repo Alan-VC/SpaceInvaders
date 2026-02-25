@@ -61,12 +61,7 @@ public abstract class Nave extends Ovni{
         }
     }
 
-    //Para verificar si esta vivo mas comodo
-    public boolean estaVivo() {
-        return this.getEstado() == Estado.VIVO;
-    }
-
     //Ambas naves disparan y gestionan sus disparos pero lo hacen de manera diferente, metodos abstracto
     public abstract void disparar();
-    public abstract void gestionarMisDisparos();
+    public abstract void gestionarMisDisparos(float limiteMuerte);
 }
