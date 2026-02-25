@@ -12,5 +12,5 @@ public abstract class Disparo extends Ovni {
     }
 
     //Métodos de para comprobar si debe ser eliminado, Setea el estado a MUERTO y se implementa en sus clases hijas de formas diferentes
-    public abstract boolean desaparecer();
+    public abstract void desaparecer(float limite);
 }
