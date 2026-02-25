@@ -1,6 +1,7 @@
 package com.politecnicomalaga.sp.model;
 
 public class Ovni {
+    //Atributos
     private float x,y;
     private float width,height;
     private float mitadWidth,mitadHeight;
@@ -10,8 +11,7 @@ public class Ovni {
     private Direccion dir;
     private String textura;
 
-    //constructor
-
+    //Constructor
     public Ovni(float x, float y, float width, float height, Estado estado, Direccion dir, String textura) {
         this.x = x;
         this.y = y;
@@ -24,91 +24,70 @@ public class Ovni {
         this.dir=dir;
     }
 
-
-    //getters y setters
-
-
+    //Getters y Setters
     public float getX() {
         return x;
     }
-
     public void setX(float x) {
         this.x = x;
     }
-
     public float getY() {
         return y;
     }
-
     public void setY(float y) {
         this.y = y;
     }
-
     public float getWidth() {
         return width;
     }
-
     public void setWidth(float width) {
         this.width = width;
     }
-
     public float getHeight() {
         return height;
     }
-
     public void setHeight(float height) {
         this.height = height;
     }
-
     public float getMitadWidth() {
         return mitadWidth;
     }
-
     public void setMitadWidth(float mitadWidth) {
         this.mitadWidth = mitadWidth;
     }
-
     public float getMitadHeight() {
         return mitadHeight;
     }
-
     public void setMitadHeight(float mitadHeight) {
         this.mitadHeight = mitadHeight;
     }
-
     public Estado getEstado() {
         return estado;
     }
-
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
-
     public Direccion getDir() {
         return dir;
     }
-
     public void setDir(Direccion dir) {
         this.dir = dir;
     }
-
     public String getTextura() {
         return textura;
     }
-
     public void setTextura(String textura) {
         this.textura = textura;
     }
-
     public float getXEsquina (){ return x-mitadWidth; }
     public float  getYEsquina(){ return y-mitadHeight; }
 
-    //Otros métodos
+    //Métodos
+    //Comprobar la colisión con otra nave
     public boolean colision (Ovni otraNave){
-        if (colisionW(this.x,this.mitadWidth,otraNave.getX(),otraNave.getMitadWidth()) && colisionH(this.y,this.mitadHeight,otraNave.getY(),otraNave.getMitadHeight())){
-            return true;
-        }
-        return false;
+        return
+            colisionW(this.x, this.mitadWidth, otraNave.getX(), otraNave.getMitadWidth()) &&
+            colisionH(this.y, this.mitadHeight, otraNave.getY(), otraNave.getMitadHeight());
     }
 
     private boolean colisionW(float x1,float mitadW1, float x2,float mitadW2){
@@ -140,5 +119,8 @@ public class Ovni {
                 break;
         }
     }
-
+    //Para verificar si esta vivo mas comodo
+    public boolean estaVivo() {
+        return this.estado == Estado.VIVO;
+    }
 }
