@@ -4,31 +4,30 @@ import java.util.ArrayList;
 
 public class NaveEne extends Nave{
 
+    //Atributos
     private int probabilidadDisparo; //Entre 0 y 100 la seteamos en el controlador
     private ArrayList<DisparoEne> misDisparos; //Lista de disparos
-
+    //Constructor
     public NaveEne(float x, float y, float width, float height, Estado estado, Direccion dir, String textura, int vidas, float cadencia, float anchoBala, float altoBala, float velocidadBala, int probabilidadDisparo) {
         super(x, y, width, height, estado, dir, textura, vidas, cadencia, anchoBala, altoBala, velocidadBala);
         this.probabilidadDisparo = probabilidadDisparo;
         this.misDisparos = new ArrayList<>();
     }
-
+    //Getters y Setters
     public int getProbabilidadDisparo() {
         return probabilidadDisparo;
     }
-
     public void setProbabilidadDisparo(int probabilidadDisparo) {
         this.probabilidadDisparo = probabilidadDisparo;
     }
-
     public ArrayList<DisparoEne> getMisDisparos() {
         return misDisparos;
     }
-
     public void setMisDisparos(ArrayList<DisparoEne> misDisparos) {
         this.misDisparos = misDisparos;
     }
 
+    //Métodos
     //Crear los disparos(Create)
     @Override
     public void disparar() {

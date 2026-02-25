@@ -3,22 +3,22 @@ package com.politecnicomalaga.sp.model;
 import java.util.ArrayList;
 
 public class NaveAmi extends Nave {
-
+    //Atributos
     private ArrayList<DisparoAmi> misDisparos; //Para el crud de disparos
-
+    //Constructor
     public NaveAmi(float x, float y, float width, float height, Estado estado, Direccion dir, String textura, int vidas, float cadencia, float anchoBala, float altoBala, float velocidadBala) {
         super(x, y, width, height, estado, dir, textura, vidas, cadencia, anchoBala, altoBala, velocidadBala);
         this.misDisparos = new ArrayList<>();
     }
-
+    //Getters y Setters
     public ArrayList<DisparoAmi> getMisDisparos() {
         return misDisparos;
     }
-
     public void setMisDisparos(ArrayList<DisparoAmi> misDisparos) {
         this.misDisparos = misDisparos;
     }
 
+    //Métodos
     //Crear los disparos(Create)
     @Override
     public void disparar() { //Aquí no tenemos random no tiene sentido usarlo, Definimos la cadencia que tendra nuestra nave en el controlador
