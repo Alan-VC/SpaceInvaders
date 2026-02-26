@@ -14,6 +14,9 @@ public class Escuadron {
             anchoBala, altoBala, velocidadBala, probabilidadDisparo, espacioEntreNaves);
     }
 
+    public NaveEne [] getNavesEnemigas() {
+        return navesEnemigas;
+    }
 
     public NaveEne[] loadNaves
         (NaveEne [] navesEnemigas, float x, float y, float width, float height, Ovni.Estado estado,
