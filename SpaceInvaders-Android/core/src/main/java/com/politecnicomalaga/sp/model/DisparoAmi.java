@@ -17,7 +17,7 @@ public class DisparoAmi extends Disparo{
         }
     }
     //Comprobamos si el disparo ha colisionado con alguna nave enemiga
-    public boolean comprobarColision(ArrayList<NaveEne> enemigos) {
+    public boolean comprobarColision(NaveEne [] enemigos) {
         // Si ya impactó (y está pendiente de borrar) evitamos "doblekill"
         // Y evitamos que una bala muerta siga matando mientras espera ser borrada
         if (this.getEstado() == Estado.MUERTO) return false;
