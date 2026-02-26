@@ -15,7 +15,7 @@ public class Controlador {
 
     //CONSTRUCTOR
     private Controlador() {
-        naveAmiga = new NaveAmi(300,300,80,70, Ovni.Estado.VIVO, Ovni.Direccion.NOMOVER,"naveJugador.png",1,4,5,7);
+        naveAmiga = new NaveAmi(300,0,80,70, Ovni.Estado.VIVO, Ovni.Direccion.NOMOVER,"naveJugador.png",1,4,20,45,10);
         velocidadNave = 1.5f;
     }
 
@@ -42,7 +42,7 @@ public class Controlador {
     }
 
     public void pintar(SpriteBatch batch, Map<String, Texture> galeriaImagenes){
-        naveAmiga.pintar(batch,galeriaImagenes.get(naveAmiga.getTextura()));
+        batch.draw(galeriaImagenes.get(naveAmiga.getTextura()),naveAmiga.getX(),naveAmiga.getY(),naveAmiga.getWidth(),naveAmiga.getHeight());
 
         //en un futuro se implementa el pintar de batallón cuando esté programado.
         //batallon.pintar(batch);
