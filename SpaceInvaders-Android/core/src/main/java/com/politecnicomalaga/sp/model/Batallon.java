@@ -1,27 +1,42 @@
 package com.politecnicomalaga.sp.model;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Batallon {
     //Atributos
     //Composición de 4 escuadrones
-    //Definimos una lista de escuadrones, la dirección actual y la velocidad
-    private List<Escuadron> escuadrones;
+    private Escuadron[] escuadrones;
     private Ovni.Direccion direccionActual;
     private float velocidad;
 
     //Constructor
-    public Batallon(Ovni.Direccion direccionActual, float velocidad) {
-        this.escuadrones = new ArrayList<>();
-        this.direccionActual = direccionActual;
+    //Con todos los parámetros necesarios para inicializar
+    public Batallon(float xInicial, float yInicial, float espacioVertical, float width, float height,
+                    Ovni.Estado estado, Ovni.Direccion direccionActual, String textura, int vidas, float cadencia,
+                    float anchoBala, float altoBala, float velocidadBala, int probabilidadDisparo, float espacioEntreNaves, float velocidad) {
         this.velocidad = velocidad;
+        this.direccionActual = direccionActual;
+        this.escuadrones = new Escuadron[4]; //Inicializamos el número de escuadrones 4.
+
+        //Cargamos los escuadrones con nuestro método load
+        loadEscuadrones(xInicial, yInicial, espacioVertical, width, height,
+            estado, direccionActual, textura, vidas, cadencia, anchoBala, altoBala, velocidadBala,
+            probabilidadDisparo, espacioEntreNaves);
     }
+
+    // Método load, en filas
+    private void loadEscuadrones(float x, float y, float espacioVertical, float width, float height,
+                                 Ovni.Estado estado, Ovni.Direccion dir, String textura, int vidas, float cadencia,
+                                 float anchoBala, float altoBala, float velocidadBala, int probabilidadDisparo, float espacioEntreNaves) {
+
+        for (int i = 0; i < this.escuadrones.length; i++) {
+            float yEscuadron = y + (i * (height + espacioVertical));
+            this.escuadrones[i] = new Escuadron(x, yEscuadron, width, height, estado, dir, textura, vidas, cadencia, anchoBala, altoBala, velocidadBala, probabilidadDisparo, espacioEntreNaves);
+        }
+    }
+
     //Getters y Setters
-    public List<Escuadron> getEscuadrones() {
+    public Escuadron[] getEscuadrones() {
         return escuadrones;
     }
-    public void setEscuadrones(List<Escuadron> escuadrones) {
+    public void setEscuadrones(Escuadron[] escuadrones) {
         this.escuadrones = escuadrones;
     }
     public Ovni.Direccion getDireccionActual() {
@@ -39,7 +54,7 @@ public class Batallon {
     //Métodos
     //Mover los escuadrones
     public void mover(float anchoPantalla, float altoPantalla, float cuantoBaja){ //Nos deberán pasar el ancho de la pantalla el alto de la pantalla y cuanto queremos que baje cada vez que llega al borde
-        if (escuadrones.isEmpty()) return; //Si por lo que sea no se ha inicializado todavía no hacemos nada
+        if (escuadrones == null || escuadrones.length == 0) return; //Si por lo que sea no se ha inicializado todavía no hacemos nada
 
         boolean tocarBorde = false;
 
@@ -62,9 +77,13 @@ public class Batallon {
     private void cambiarDireccionYBajarse(float cuantoBaja) {
         //Invertimos la dirección
         direccionActual = (direccionActual == Ovni.Direccion.DERECHA) ? Ovni.Direccion.IZQUIERDA : Ovni.Direccion.DERECHA;
-        //Bajar el batallón usando el método de la clase escuadron
+        //Bajar el batallón completo usando el método de la clase escuadron
         for (Escuadron esc : escuadrones) {
             esc.bajar(cuantoBaja);
+        }
+        //Los movemos un pixel para que no este a true tocar borde por si acaso
+        for (Escuadron esc : escuadrones) {
+            esc.moverLateralmente(direccionActual, velocidad);
         }
     }
 
@@ -81,13 +100,10 @@ public class Batallon {
             esc.gestionarDisparosEnemigos(limiteMuerte);
         }
     }
-    //Por si queremos en un futuro seguir añadiendo escuadrones al batallón, añadiendo dificultad
-    public void agregarEscuadron(Escuadron esc) {
-        this.escuadrones.add(esc);
-    }
+
     //Comprobamos si quedan tropas, si no quedan terminamos el juego más fácil para el controlador.
     public boolean tieneTropas() {
-        if (escuadrones.isEmpty()) return false; //Comprobamos si está vacío en ese caso obviamente no hay tropas
+        if (escuadrones == null || escuadrones.length == 0) return false; //Comprobamos si por lo que sea está vacío en ese caso obviamente no hay tropas
 
         //El problema es que cuando mueren las naves siguen existiendo péro su estado está en Muerto
         //Recorremos los escuadrones y preguntamos si tienen naves vivas
