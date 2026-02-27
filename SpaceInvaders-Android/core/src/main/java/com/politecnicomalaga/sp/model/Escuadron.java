@@ -36,10 +36,10 @@ public class Escuadron {
             if (!naveEne.estaVivo()){
                 continue;
             }
-            if (naveEne.getX() + naveEne.getWidth() >= anchoPantalla) {
+            if (naveEne.getXEsquina() + naveEne.getWidth() >= anchoPantalla) {
                 return true;
             }
-            if (naveEne.getX() <= 0) {
+            if (naveEne.getXEsquina() <= 0) {
                 return true;
             }
         }
@@ -48,13 +48,7 @@ public class Escuadron {
     public void moverLateralmente(Ovni.Direccion direccionActual, float velocidad) {
         for (NaveEne naveEne : navesEnemigas) {
             if (naveEne.estaVivo()) {
-                float xActual = naveEne.getX();
-
-                if (direccionActual == Ovni.Direccion.DERECHA) {
-                    naveEne.setX(xActual + velocidad);
-                } else if (direccionActual == Ovni.Direccion.IZQUIERDA) {
-                    naveEne.setX(xActual - velocidad);
-                }
+                naveEne.mover(direccionActual, velocidad);
             }
         }
     }
@@ -62,8 +56,7 @@ public class Escuadron {
         for (NaveEne naveEne :navesEnemigas) {
             //Aqui solo bajan las naves que estén vivas por eso la comprobación
             if (naveEne.estaVivo()) {
-                float yActual = naveEne.getY();
-                naveEne.setY(yActual - cuantoBaja);
+                naveEne.mover(Ovni.Direccion.ABAJO, cuantoBaja);
             }
         }
     }
@@ -71,6 +64,23 @@ public class Escuadron {
         for (NaveEne naveEne :navesEnemigas) {
             if (naveEne.estaVivo()) {
                 naveEne.gestionarMisDisparos(limiteInferior);
+            }
+        }
+    }
+    public boolean tieneNavesVivas(){
+        //Si alguna esta viva devuelve true
+        for (NaveEne naveEne :navesEnemigas) {
+            if (naveEne.estaVivo()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void disparar(){
+        //Cada nave dispara segun la probabilidad de disparo
+        for (NaveEne naveEne :navesEnemigas){
+            if (naveEne.estaVivo()) {
+                naveEne.disparar();
             }
         }
     }
