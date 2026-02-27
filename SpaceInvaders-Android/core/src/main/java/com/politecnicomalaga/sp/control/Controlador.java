@@ -31,7 +31,7 @@ public class Controlador {
         getContadorTiempoEnemigo=0;
         cadenciaAmiga= 120;
         cadenciaEnemiga=180;
-        batallon=new Batallon();
+        batallon=new Batallon(Ovni.Direccion.DERECHA,1);
         jugando=true;
     }
 
@@ -40,7 +40,7 @@ public class Controlador {
         if (miSingle == null){
             miSingle= new Controlador();
         }
-            return miSingle;
+        return miSingle;
     }
     public void click (float x, float y){
         cambiarSentidoNaveAmiga(x);
@@ -84,6 +84,9 @@ public class Controlador {
             }
             naveAmiga.mover(naveAmiga.getDir(),velocidadNave);
 
+            //SE MUEVE EL ESCUADRÓN
+            batallon.mover(anchoPantalla,altoPantalla,20);
+
             //gestiono todos los disparos
             //Los amigos
             naveAmiga.gestionarMisDisparos(altoPantalla);
@@ -123,7 +126,7 @@ public class Controlador {
         if (x>naveAmiga.getX() && naveAmiga.getDir()!= Ovni.Direccion.DERECHA){
             naveAmiga.setDir(Ovni.Direccion.DERECHA);
         } else if (x>naveAmiga.getX() && naveAmiga.getDir()== Ovni.Direccion.DERECHA) {
-           naveAmiga.setDir(Ovni.Direccion.NOMOVER);
+            naveAmiga.setDir(Ovni.Direccion.NOMOVER);
         } else if (x<naveAmiga.getX() && naveAmiga.getDir()!= Ovni.Direccion.IZQUIERDA){
             naveAmiga.setDir(Ovni.Direccion.IZQUIERDA);
         } else if (x<naveAmiga.getX() && naveAmiga.getDir() == Ovni.Direccion.IZQUIERDA){
@@ -149,9 +152,14 @@ public class Controlador {
     }
 
     public  void hematado(Batallon batallon, List<DisparoAmi> disparoAmis){
+        Escuadron[] escuadrones = batallon.getEscuadrones();
+        Escuadron ultimo=escuadrones.escuadrones[escuadrones.length-1];
+        NaveEne[] ultimasNaves = ultimo.getNavesEnemigas();
+        float yBatallon = ultimasNaves[0].getY();
+
+
         for (DisparoAmi disparoAmi: disparoAmis){
-            if (disparoAmi.getY()+disparoAmi.getHeight()>=batallon.getY()){
-                Escuadron[] escuadrones = batallon.getEscuadrones();
+            if (disparoAmi.getY()+disparoAmi.getHeight()>=yBatallon){
                 for (Escuadron escuadron: escuadrones){
                     NaveEne[] navesEnemigas = escuadron.getNavesEnemigas();
                     disparoAmi.comprobarColision(navesEnemigas);
@@ -162,8 +170,13 @@ public class Controlador {
     }
 
     public void meHanTocado(Batallon batallon, NaveAmi naveAmiga) {
-        if (batallon.getY() <= naveAmiga.getY() + naveAmiga.getHeight()) {
-            Escuadron[] escuadrones = batallon.getEscuadrones();
+        Escuadron[] escuadrones = batallon.getEscuadrones();
+        Escuadron ultimo= escuadrones[escuadrones.length-1];
+        NaveEne[] ultimasNaves = ultimo.getNavesEnemigas();
+        float yBatallon = ultimasNaves[0].getY();
+
+
+        if (yBatallon <= naveAmiga.getY() + naveAmiga.getHeight()) {
             for (Escuadron escuadron : escuadrones) {
                 NaveEne[] navesEnemigas = escuadron.getNavesEnemigas();
                 for (NaveEne naveEne : navesEnemigas) {
