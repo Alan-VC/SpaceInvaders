@@ -31,15 +31,15 @@ public class Escuadron {
 
             return navesEnemigas;
     }
-    public boolean haTocadoBorde(float anchoPantalla){
+    public boolean haTocadoBorde(float anchoPantalla, Ovni.Direccion dirActual){
         for (NaveEne naveEne : navesEnemigas) {
             if (!naveEne.estaVivo()){
                 continue;
             }
-            if (naveEne.getXEsquina() + naveEne.getWidth() >= anchoPantalla) {
+            if (naveEne.getXEsquina() + naveEne.getWidth() >= anchoPantalla && dirActual == Ovni.Direccion.DERECHA ) {
                 return true;
             }
-            if (naveEne.getXEsquina() <= 0) {
+            if (naveEne.getXEsquina() <= 0 && dirActual == Ovni.Direccion.IZQUIERDA) {
                 return true;
             }
         }
