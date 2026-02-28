@@ -33,9 +33,9 @@ public class NaveEne extends Nave{
     public void disparar() {
         if (estaVivo()) {
             if (Math.random() * 100 < getProbabilidadDisparo()) {
-                // Cálculo dinámico para centrar la bala perfectamente
-                float posX = (getX() + getMitadWidth()) - (getAnchoBala() / 2f);
-                float posY = getY() - getAltoBala();
+                // Cálculo para centrar la bala perfectamente
+                float posX = getX();
+                float posY = getY() - getMitadHeight();
 
                 // Creamos el disparo y lo añadimos a la lista
                 DisparoEne nuevoDisparo = new DisparoEne(posX, posY, getAnchoBala(), getAltoBala(), Estado.VIVO, Direccion.ABAJO, "disparoEne.png");
