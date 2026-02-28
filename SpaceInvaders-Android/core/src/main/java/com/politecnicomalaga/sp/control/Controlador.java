@@ -25,13 +25,13 @@ public class Controlador {
 
     //CONSTRUCTOR
     private Controlador() {
-        naveAmiga = new NaveAmi(300,0,80,70, Ovni.Estado.VIVO, Ovni.Direccion.NOMOVER,"naveJugador.png",1,4,20,45,10);
-        velocidadNave = 1.5f;
+        naveAmiga = new NaveAmi(300,0,60,60, Ovni.Estado.VIVO, Ovni.Direccion.NOMOVER,"naveJugador.png",1,120,15,30,8);
+        velocidadNave = 1f;
         contadorTiempoAmigo=0;
         getContadorTiempoEnemigo=0;
-        cadenciaAmiga= 120;
+        cadenciaAmiga= 180;
         cadenciaEnemiga=180;
-        batallon=new Batallon(Ovni.Direccion.DERECHA,1);
+        batallon=new Batallon(Gdx.graphics.getWidth()%2,Gdx.graphics.getHeight()-40,10, 50,40, Ovni.Estado.VIVO, Ovni.Direccion.DERECHA, "enemigo1.png",1,180,5,30,1,7,10,0.3f);
         jugando=true;
     }
 
@@ -61,6 +61,7 @@ public class Controlador {
             getContadorTiempoEnemigo++;
             if (getContadorTiempoEnemigo==cadenciaEnemiga){
                 dispararTodosLosEnemigos(batallon);
+                getContadorTiempoEnemigo=0;
             }
 
             //me han dado
@@ -92,7 +93,7 @@ public class Controlador {
             naveAmiga.gestionarMisDisparos(altoPantalla);
 
             //Los enemigos
-            gestioanrDisparosBatallon( batallon, altoPantalla);
+            gestioanrDisparosBatallon( batallon, 0);
         }
     }
 
@@ -107,17 +108,19 @@ public class Controlador {
             for (NaveEne navE: naveEnes){
                 if (navE.estaVivo()) {
                     batch.draw(galeriaImagenes.get(navE.getTextura()), navE.getX(), navE.getY(), navE.getWidth(), navE.getHeight());
-                    List<DisparoEne> disparosEnemigos = navE.getMisDisparos();
-                    for (DisparoEne disEne: disparosEnemigos){
-                        batch.draw(galeriaImagenes.get(disEne.getTextura()),disEne.getX(),disEne.getY(),disEne.getWidth(),disEne.getHeight());
-                    }
+                }
+                List<DisparoEne> disparosEnemigos = navE.getMisDisparos();
+                for (DisparoEne disEne: disparosEnemigos){
+                    batch.draw(galeriaImagenes.get(disEne.getTextura()),disEne.getX(),disEne.getY(),disEne.getWidth(),disEne.getHeight());
                 }
             }
         }
         //Pintar disparosAmigos
         List<DisparoAmi> disparosAmigos = naveAmiga.getMisDisparos();
         for (DisparoAmi dispAmi: disparosAmigos){
-            batch.draw(galeriaImagenes.get(dispAmi.getTextura()),dispAmi.getX(),dispAmi.getY(),dispAmi.getWidth(),dispAmi.getHeight());
+            if (dispAmi.estaVivo()){
+                batch.draw(galeriaImagenes.get(dispAmi.getTextura()),dispAmi.getX(),dispAmi.getY(),dispAmi.getWidth(),dispAmi.getHeight());
+            }
         }
 
     }
@@ -139,13 +142,9 @@ public class Controlador {
         for (Escuadron escuadron: escuadrones){
             NaveEne[] navesEnemigas = escuadron.getNavesEnemigas();
             for (NaveEne naveEne: navesEnemigas){
-                if (naveEne.estaVivo()){
-                    List<DisparoEne> disparoEnes = naveEne.getMisDisparos();
-                    for (DisparoEne disparoEne: disparoEnes){
-                        if (disparoEne.getY()<=naveAmiga.getY()+naveAmiga.getHeight()){
-                            disparoEne.comprobarColision(naveAmiga);
-                        }
-                    }
+                List<DisparoEne> disparoEnes = naveEne.getMisDisparos();
+                for (DisparoEne disparoEne: disparoEnes){
+                    disparoEne.comprobarColision(naveAmiga);
                 }
             }
         }
@@ -153,17 +152,10 @@ public class Controlador {
 
     public  void hematado(Batallon batallon, List<DisparoAmi> disparoAmis){
         Escuadron[] escuadrones = batallon.getEscuadrones();
-        Escuadron ultimo=escuadrones.escuadrones[escuadrones.length-1];
-        NaveEne[] ultimasNaves = ultimo.getNavesEnemigas();
-        float yBatallon = ultimasNaves[0].getY();
-
-
         for (DisparoAmi disparoAmi: disparoAmis){
-            if (disparoAmi.getY()+disparoAmi.getHeight()>=yBatallon){
-                for (Escuadron escuadron: escuadrones){
-                    NaveEne[] navesEnemigas = escuadron.getNavesEnemigas();
-                    disparoAmi.comprobarColision(navesEnemigas);
-                }
+            for (Escuadron escuadron: escuadrones){
+                NaveEne[] navesEnemigas = escuadron.getNavesEnemigas();
+                disparoAmi.comprobarColision(navesEnemigas);
             }
         }
 
@@ -171,19 +163,12 @@ public class Controlador {
 
     public void meHanTocado(Batallon batallon, NaveAmi naveAmiga) {
         Escuadron[] escuadrones = batallon.getEscuadrones();
-        Escuadron ultimo= escuadrones[escuadrones.length-1];
-        NaveEne[] ultimasNaves = ultimo.getNavesEnemigas();
-        float yBatallon = ultimasNaves[0].getY();
-
-
-        if (yBatallon <= naveAmiga.getY() + naveAmiga.getHeight()) {
-            for (Escuadron escuadron : escuadrones) {
-                NaveEne[] navesEnemigas = escuadron.getNavesEnemigas();
-                for (NaveEne naveEne : navesEnemigas) {
-                    if (naveEne.estaVivo() && naveEne.colision(naveAmiga)) {
-                        naveEne.setEstado(Ovni.Estado.MUERTO);
-                        naveAmiga.setVidas(naveAmiga.getVidas() - 1);
-                    }
+        for (Escuadron escuadron : escuadrones) {
+            NaveEne[] navesEnemigas = escuadron.getNavesEnemigas();
+            for (NaveEne naveEne : navesEnemigas) {
+                if (naveEne.estaVivo() && naveEne.colision(naveAmiga)) {
+                    naveEne.setEstado(Ovni.Estado.MUERTO);
+                    naveAmiga.setVidas(naveAmiga.getVidas() - 1);
                 }
             }
         }
@@ -196,9 +181,7 @@ public class Controlador {
         for (Escuadron escuadron : escuadrones) {
             NaveEne[] navesEnemigas = escuadron.getNavesEnemigas();
             for (NaveEne naveEne : navesEnemigas) {
-                if (naveEne.estaVivo()) {
-                    naveEne.disparar();
-                }
+                naveEne.disparar();
             }
         }
     }
@@ -208,9 +191,7 @@ public class Controlador {
         for (Escuadron escuadron : escuadrones) {
             NaveEne[] navesEnemigas = escuadron.getNavesEnemigas();
             for (NaveEne naveEne : navesEnemigas) {
-                if (naveEne.estaVivo()) {
-                    naveEne.gestionarMisDisparos(limiteSuperior);
-                }
+                naveEne.gestionarMisDisparos(limiteSuperior);
             }
         }
     }
