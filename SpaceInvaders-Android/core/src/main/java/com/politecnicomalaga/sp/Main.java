@@ -14,13 +14,12 @@ import java.util.Map;
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
-    private Gdx gdx;
 
     private float anchoPantalla,altoPantalla;
 
     private float y,x;
     Map<String,Texture> galeriaImagenes;
-    Controlador controlador;
+
 
     @Override
     public void create() {
@@ -39,7 +38,7 @@ public class Main extends ApplicationAdapter {
         galeriaImagenes.put("disparoEne.png", image);
 
         anchoPantalla = Gdx.graphics.getWidth();
-        altoPantalla=Gdx.graphics.getHeight();
+        altoPantalla = Gdx.graphics.getHeight();
 
     }
 
@@ -48,7 +47,7 @@ public class Main extends ApplicationAdapter {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
 
         //Control de entrada
-        if(gdx.input.justTouched()){
+        if(Gdx.input.justTouched()){
             x= Gdx.input.getX();
             y=Gdx.input.getY();
             Controlador.getInstance().click(x,y);
