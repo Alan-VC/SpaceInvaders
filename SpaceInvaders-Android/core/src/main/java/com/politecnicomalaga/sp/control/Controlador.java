@@ -17,8 +17,8 @@ import java.util.Map;
 public class Controlador {
     private static Controlador miSingle;
     private NaveAmi naveAmiga;
-    public float velocidadNave;
-    public int cadenciaAmiga,cadenciaEnemiga;
+    private final float velocidadNave;
+    private final int cadenciaAmiga,cadenciaEnemiga;
     private int contadorTiempoAmigo, getContadorTiempoEnemigo;
     private Batallon batallon;
     private boolean jugando;
@@ -46,10 +46,15 @@ public class Controlador {
         cambiarSentidoNaveAmiga(x);
     }
     public void simulaMundo(float anchoPantalla, float altoPantalla){
+        //Comprobar si he muerto
         if (!naveAmiga.estaVivo()){
             jugando=false;
         }
+
         if (jugando){
+            //Comprobar si he ganado
+            jugando=comprobarSiGano(batallon);
+
             //disparo yo?
             contadorTiempoAmigo++;
             if (contadorTiempoAmigo==cadenciaAmiga){
@@ -196,6 +201,16 @@ public class Controlador {
         }
     }
 
-
-
+    public boolean comprobarSiGano(Batallon batallon){
+        Escuadron[] escuadrones = batallon.getEscuadrones();
+        for (Escuadron escuadron: escuadrones){
+            NaveEne[] naveEnes = escuadron.getNavesEnemigas();
+            for (NaveEne naveEne: naveEnes){
+                if (naveEne.estaVivo()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
