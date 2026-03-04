@@ -36,10 +36,10 @@ public class Escuadron {
             if (!naveEne.estaVivo()){
                 continue;
             }
-            if (naveEne.getXEsquina() + naveEne.getWidth() >= anchoPantalla && dirActual == Ovni.Direccion.DERECHA ) {
+            if (naveEne.getX() + naveEne.getWidth() >= anchoPantalla && dirActual == Ovni.Direccion.DERECHA ) {
                 return true;
             }
-            if (naveEne.getXEsquina() <= 0 && dirActual == Ovni.Direccion.IZQUIERDA) {
+            if (naveEne.getX() <= 0 && dirActual == Ovni.Direccion.IZQUIERDA) {
                 return true;
             }
         }
