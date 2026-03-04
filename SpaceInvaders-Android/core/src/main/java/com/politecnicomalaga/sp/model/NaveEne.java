@@ -34,7 +34,7 @@ public class NaveEne extends Nave{
         if (estaVivo()) {
             if (Math.random() * 100 < getProbabilidadDisparo()) {
                 // Cálculo para centrar la bala perfectamente
-                float posX = getX();
+                float posX = getX()+getMitadWidth();
                 float posY = getY() - getMitadHeight();
 
                 // Creamos el disparo y lo añadimos a la lista
