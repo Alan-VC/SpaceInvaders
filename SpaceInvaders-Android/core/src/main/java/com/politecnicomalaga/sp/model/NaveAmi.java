@@ -24,7 +24,7 @@ public class NaveAmi extends Nave {
     public void disparar() { //Aquí no tenemos random no tiene sentido usarlo, Definimos la cadencia que tendra nuestra nave en el controlador
         if (estaVivo()) {
             // Cálculo de posición centrada (Igual que en NaveEne pero hacia ARRIBA)
-            float posX = getX()+getMitadWidth();
+            float posX = getX() + getMitadWidth() - (getAnchoBala() / 2f);
             float posY = getY() + getMitadHeight();
 
             // Creamos el disparo y lo añadimos a la lista
